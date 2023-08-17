@@ -5,13 +5,22 @@ import { styled } from "styled-components";
 
 type Props = {
   close: () => void;
+  children?: React.ReactNode;
+  maxWidth?: number;
 };
 
-export default function Modal({ close }: Props) {
+export default function Default({ close, children, maxWidth }: Props) {
   return (
     <>
       <Wrapper onClick={close}>
-        <Container onClick={(e) => e.stopPropagation()}></Container>
+        <Container
+          style={{
+            maxWidth: maxWidth ? maxWidth : 500,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {children}
+        </Container>
       </Wrapper>
     </>
   );
@@ -46,7 +55,6 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
-  max-width: 500px;
   width: 80%;
   padding: 20px;
   border-radius: 10px;

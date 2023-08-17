@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { styled } from "styled-components";
-import Modal from "./Modal";
+import Default from "./Modal/Default";
 import Link from "next/link";
 import Image from "./Image";
 
@@ -57,7 +57,7 @@ export default function Header() {
           </Row>
         </Container>
       </Wrapper>
-      {modal && <Modal close={() => setModal(false)} />}
+      {modal && <Default close={() => setModal(false)} />}
     </>
   );
 }

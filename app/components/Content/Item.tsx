@@ -2,24 +2,49 @@
 
 import { keyframes, styled } from "styled-components";
 import Image from "../Image";
+import { SearchResultVideo, VideoDetail } from "@/app/lib/api/twi-videos.net";
+import { useEffect, useState } from "react";
+import { TwiVideosNet } from "@/app/lib/api";
+import Modal from "../Modal";
+import { isSchool } from "@/app/lib/school";
 
-export default function Item() {
+type Props = {
+  video: SearchResultVideo;
+  click?: () => void;
+};
+
+export default function Item(props: Props) {
+  const [detail, setDetail] = useState<VideoDetail>();
+  const [modal, setModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    TwiVideosNet.getDetail(props.video.id).then((res) => setDetail(res));
+  }, [props.video.id]);
+
   return (
     <>
-      <Wrapper>
+      <Wrapper onClick={() => setModal(true)}>
         <ImageWrapper>
-          <RoundedImage
-            src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1NZ1HjatvCoyQxoAqp6NZyt0Jzd31Rp6WuQ&usqp=CAU"
-            }
-            fill
-            alt={"test"}
-          />
+          {/* <RoundedImage src={props.video.thumbnail} fill alt={"article"} /> */}
+          {isSchool() ? (
+            <RoundedImage
+              src={
+                "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg"
+              }
+              fill
+              alt={"article"}
+            />
+          ) : (
+            <RoundedImage src={props.video.thumbnail} fill alt={"article"} />
+          )}
         </ImageWrapper>
         <TextWrapper>
-          <Text>2022.02.15</Text>
+          <Text>{detail?.uploader}</Text>
         </TextWrapper>
       </Wrapper>
+      {modal && detail && (
+        <Modal.Detail close={() => setModal(false)} detail={detail} />
+      )}
     </>
   );
 }
@@ -73,6 +98,7 @@ const ImageWrapper = styled.div`
   @media (max-width: 772px) {
     aspect-ratio: 1 / 1;
     height: auto;
+    overflow: hidden;
   }
 `;
 
