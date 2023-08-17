@@ -23,8 +23,6 @@ async function fetchAPI(url: string, prop: Props = {}) {
     _url.searchParams.append(key, query[key])
   );
 
-  console.log(_url.toString());
-
   const res = await fetch(_url.toString(), {
     method: method,
     headers: {

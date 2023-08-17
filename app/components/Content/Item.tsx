@@ -25,7 +25,6 @@ export default function Item(props: Props) {
     <>
       <Wrapper onClick={() => setModal(true)}>
         <ImageWrapper>
-          {/* <RoundedImage src={props.video.thumbnail} fill alt={"article"} /> */}
           {isSchool() ? (
             <RoundedImage
               src={
