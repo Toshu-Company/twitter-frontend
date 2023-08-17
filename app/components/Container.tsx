@@ -24,4 +24,16 @@ const Wrapper = styled.div`
 const ContainerBox = styled.div`
   width: 1300px;
   height: 100%;
+
+  @media (max-width: 1300px) {
+    width: 1036px;
+  }
+
+  @media (max-width: 1036px) {
+    width: 772px;
+  }
+
+  @media (max-width: 772px) {
+    width: 85%;
+  }
 `;
