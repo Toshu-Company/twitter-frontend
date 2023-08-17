@@ -17,7 +17,7 @@ export default function Detail({ close, detail }: Props) {
     <>
       <Modal.Default maxWidth={1200} close={close}>
         <Wrapper>
-          <Video controls>
+          <Video controls autoPlay loop muted autoFocus>
             <source
               src={isSchool() ? "https://youtu.be/0bIRwBpBcZQ" : detail?.url[1]}
               type="video/mp4"
