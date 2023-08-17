@@ -1,26 +1,14 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import Modal from "./Modal";
 import Link from "next/link";
+import Image from "./Image";
 
 export default function Header() {
-  const [width, setWidth] = useState<number>(window.innerWidth);
   const [modal, setModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    window.addEventListener("resize", () => {
-      setWidth(window.innerWidth);
-    });
-
-    return () => {
-      window.removeEventListener("resize", () => {
-        setWidth(window.innerWidth);
-      });
-    };
-  }, []);
+  const [search, setSearch] = useState<string>("");
 
   return (
     <>
@@ -29,37 +17,41 @@ export default function Header() {
           <Link href={"/"}>
             <Image
               src={require("@/public/images/twitter.svg")}
-              width={width >= 768 ? 48 : 30}
-              height={width >= 768 ? 48 : 30}
+              width={[40, { responsive: 768, size: 32 }]}
               alt="Twitter"
+              responsive
             />
           </Link>
           <Row>
             <Search>
-              <Input placeholder="Search..." />
+              <Input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search..."
+              />
               <Button>
                 <Image
                   src={require("@/public/images/search.svg")}
-                  width={width >= 768 ? 20 : 16}
-                  height={width >= 768 ? 20 : 16}
+                  width={[20, { responsive: 768, size: 16 }]}
                   alt="Search"
+                  responsive
                 />
               </Button>
             </Search>
             <Button onClick={() => setModal(true)}>
               <Image
                 src={require("@/public/images/setting.svg")}
-                width={width >= 768 ? 24 : 20}
-                height={width >= 768 ? 24 : 20}
+                width={[24, { responsive: 768, size: 20 }]}
                 alt="Setting"
+                responsive
               />
             </Button>
             <LinkButton href={"/favorites"}>
               <Image
                 src={require("@/public/images/heart.svg")}
-                width={width >= 768 ? 24 : 20}
-                height={width >= 768 ? 24 : 20}
-                alt="heart"
+                width={[24, { responsive: 768, size: 20 }]}
+                alt="Favorites"
+                responsive
               />
             </LinkButton>
           </Row>
@@ -78,9 +70,13 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  background-color: #1e1e1e;
+
   position: fixed;
   top: 0;
   left: 0;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 `;
 
 const Container = styled.div`
@@ -108,11 +104,19 @@ const Search = styled.div`
   &::placeholder {
     color: #8899a6;
   }
+
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 30px;
+
+    font-size: 14px;
+  }
 `;
 
 const Input = styled.input`
   flex: 1;
   height: 100%;
+  min-width: 0;
 
   background-color: transparent;
 `;
@@ -147,4 +151,8 @@ const Row = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
 `;
