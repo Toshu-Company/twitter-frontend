@@ -2,10 +2,10 @@ import "@/public/styles/globals.css";
 import type { Metadata } from "next";
 import Header from "./components/Header";
 import Container from "./components/Container";
+import Recoil from "./components/Recoil";
 
 export const metadata: Metadata = {
-  title: "Twitter",
-  description: "Twitter ^^",
+  icons: "/images/twitter.svg",
 };
 
 export default function RootLayout({
@@ -16,8 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-        <Container>{children}</Container>
+        <Recoil.Root>
+          <Header />
+          <Container>{children}</Container>
+        </Recoil.Root>
       </body>
     </html>
   );
