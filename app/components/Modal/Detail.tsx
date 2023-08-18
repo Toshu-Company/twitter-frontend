@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import Modal from ".";
 import { VideoDetail } from "@/app/lib/api/twi-videos.net";
 import { isSchool } from "@/app/lib/school";
+import Link from "next/link";
 
 type Props = {
   close: () => void;
@@ -23,6 +24,11 @@ export default function Detail({ close, detail }: Props) {
               type="video/mp4"
             />
           </Video>
+          <User>
+            <Link href={`/user/${detail?.uploader_id}`}>
+              {detail?.uploader}
+            </Link>
+          </User>
           <Title>{detail?.title}</Title>
         </Wrapper>
       </Modal.Default>
@@ -45,10 +51,17 @@ const Video = styled.video`
   aspect-ratio: 16 / 9;
 `;
 
-const Title = styled.h1`
+const User = styled.h1`
   font-size: 24px;
   font-weight: 600;
   color: white;
+`;
+
+const Title = styled.h2`
+  font-size: 24px;
+  font-weight: 500;
+  color: white;
+  white-space: pre-wrap;
 
   @media screen and (max-width: 768px) {
     font-size: 18px;

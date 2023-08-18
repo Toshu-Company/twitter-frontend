@@ -120,18 +120,18 @@ export async function getSearch(
 
 /**
  * Fetches a list of users based on a search query.
- * @param query - The search query string.
+ * @param id - The search query string.
  * @param page - The page number to retrieve. Defaults to 1.
  * @returns A Promise that resolves to the search results data.
  */
-export async function getSearchUsers(
-  query: string,
+export async function getSearchUser(
+  id: string,
   page = 1
 ): Promise<SearchResult> {
   const data = await fetchAPI(
-    `${process.env.NEXT_PUBLIC_API_URL}/twi-videos/search/users`,
+    `${process.env.NEXT_PUBLIC_API_URL}/twi-videos/search/user`,
     {
-      query: { query, page },
+      query: { id, page },
     }
   );
   return data;
