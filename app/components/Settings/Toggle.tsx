@@ -1,64 +1,35 @@
 "use client";
 
 import { styled } from "styled-components";
-import Modal from ".";
+import Modal from "../Modal";
 import { useState } from "react";
 
 type Props = {
-  close: () => void;
+  label: string;
+  checked?: boolean;
+  onChange?: (isOn: boolean) => void;
 };
 
-export default function Settings({ close }: Props) {
-  const [isOn, setIsOn] = useState(false);
+export default function Toggle({ label, checked, onChange }: Props) {
+  const [isOn, setIsOn] = useState(checked ?? false);
 
   const handleToggle = () => {
     setIsOn(!isOn);
+    onChange?.(!isOn);
   };
 
   return (
     <>
-      <Modal.Default close={close}>
-        <Wrapper>
-          <Category>Category 1</Category>
-          <ToggleWrapper>
-            <ToggleLabel>Toggle</ToggleLabel>
-            <ToggleSwitch onClick={handleToggle}>
-              <SwitchInput type="checkbox" checked={isOn} />
-              <SwitchSlider />
-            </ToggleSwitch>
-          </ToggleWrapper>
-          <Splitter />
-          <Category>Category 2</Category>
-          <ToggleWrapper>
-            <ToggleLabel>Toggle</ToggleLabel>
-            <ToggleSwitch onClick={handleToggle}>
-              <SwitchInput type="checkbox" checked={isOn} />
-              <SwitchSlider />
-            </ToggleSwitch>
-          </ToggleWrapper>
-        </Wrapper>
-      </Modal.Default>
+      <ToggleWrapper>
+        <ToggleLabel>{label}</ToggleLabel>
+        <ToggleSwitch onClick={handleToggle}>
+          <SwitchInput type="checkbox" checked={isOn} />
+          <SwitchSlider />
+        </ToggleSwitch>
+      </ToggleWrapper>
     </>
   );
 }
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-const Splitter = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: #696969;
-  margin: 16px 0;
-`;
-
-const Category = styled.div`
-  font-size: 36px;
-  font-weight: bold;
-  margin-bottom: 16px;
-`;
 
 const ToggleWrapper = styled.div`
   display: flex;

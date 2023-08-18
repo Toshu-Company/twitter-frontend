@@ -6,8 +6,7 @@ import Default from "./Modal/Default";
 import Link from "next/link";
 import Image from "./Image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Settings from "./Modal/Settings";
-import Settings2 from "./Modal/Settings2";
+import Settings from "./Settings";
 
 export default function Header() {
   const router = useRouter();
@@ -80,7 +79,7 @@ export default function Header() {
           </Row>
         </Container>
       </Wrapper>
-      {modal && <Settings close={() => setModal(false)} />}
+      {modal && <Settings.Default close={() => setModal(false)} />}
     </>
   );
 }
