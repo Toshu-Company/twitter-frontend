@@ -49,6 +49,7 @@ export default function Index() {
     return () => {
       if (targetNode) unobserve(targetNode);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ export default function Index() {
     } else {
       fetch(userId, page, videos);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, userId]);
 
   return (

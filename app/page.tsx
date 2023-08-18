@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Content from "./components/Content";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { TwiVideosNet } from "./lib/api";
-import { SearchResult, SearchResultVideo } from "./lib/api/twi-videos.net";
+import { SearchResultVideo } from "./lib/api/twi-videos.net";
 import useIntersectionObserver from "./lib/observer";
 import { useSearchParams } from "next/navigation";
 
@@ -49,6 +49,7 @@ export default function Index() {
     return () => {
       if (targetNode) unobserve(targetNode);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -59,6 +60,7 @@ export default function Index() {
     } else {
       fetch(search, page, videos);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, search]);
 
   return (
