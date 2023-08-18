@@ -1,12 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { styled } from "styled-components";
 import Default from "./Modal/Default";
 import Link from "next/link";
 import Image from "./Image";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   const [modal, setModal] = useState<boolean>(false);
   const [search, setSearch] = useState<string>("");
 
@@ -29,7 +44,13 @@ export default function Header() {
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search..."
               />
-              <Button>
+              <Button
+                onClick={() =>
+                  router.push(
+                    pathname + "?" + createQueryString("search", search)
+                  )
+                }
+              >
                 <Image
                   src={require("@/public/images/search.svg")}
                   width={[20, { responsive: 768, size: 16 }]}
