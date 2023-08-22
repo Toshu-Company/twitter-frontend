@@ -9,7 +9,7 @@ import Modal from "../Modal";
 import { isSchool } from "@/app/lib/school";
 
 type Props = {
-  video: SearchResultVideo;
+  videoId: string;
   click?: () => void;
 };
 
@@ -18,8 +18,10 @@ export default function Item(props: Props) {
   const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
-    TwiVideosNet.getDetail(props.video.id).then((res) => setDetail(res));
-  }, [props.video.id]);
+    TwiVideosNet.getDetail(props.videoId).then((res) => setDetail(res));
+  }, [props.videoId]);
+
+  console.log(detail);
 
   return (
     <>
@@ -34,7 +36,14 @@ export default function Item(props: Props) {
               alt={"article"}
             />
           ) : (
-            <RoundedImage src={props.video.thumbnail} fill alt={"article"} />
+            <RoundedImage
+              src={
+                detail?.thumbnails[1].url ??
+                "https://cdn.pixabay.com/photo/2017/01/26/18/09/length-landscape-2011238_1280.jpg"
+              }
+              fill
+              alt={"article"}
+            />
           )}
         </ImageWrapper>
         <TextWrapper>
@@ -42,7 +51,11 @@ export default function Item(props: Props) {
         </TextWrapper>
       </Wrapper>
       {modal && detail && (
-        <Modal.Detail close={() => setModal(false)} detail={detail} />
+        <Modal.Detail
+          close={() => setModal(false)}
+          id={props.videoId}
+          detail={detail}
+        />
       )}
     </>
   );

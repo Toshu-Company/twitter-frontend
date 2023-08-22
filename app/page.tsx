@@ -67,7 +67,8 @@ export default function Index() {
     <>
       <Wrapper>
         <Content.Container>
-          {videos && videos.map((v, i) => <Content.Item key={i} video={v} />)}
+          {videos &&
+            videos.map((v, i) => <Content.Item key={i} videoId={v.id} />)}
           <Intersection
             id="intersection"
             ref={target}

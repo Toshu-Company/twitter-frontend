@@ -5,13 +5,16 @@ import Modal from ".";
 import { VideoDetail } from "@/app/lib/api/twi-videos.net";
 import { isSchool } from "@/app/lib/school";
 import Link from "next/link";
+import Image from "../Image";
+import Favorite from "../Content/Favorite";
 
 type Props = {
   close: () => void;
+  id: string;
   detail: VideoDetail;
 };
 
-export default function Detail({ close, detail }: Props) {
+export default function Detail({ close, id, detail }: Props) {
   console.log(detail);
 
   return (
@@ -24,11 +27,16 @@ export default function Detail({ close, detail }: Props) {
               type="video/mp4"
             />
           </Video>
-          <User>
-            <Link href={`/user/${detail?.uploader_id}`}>
-              {detail?.uploader}
-            </Link>
-          </User>
+          <TopRow>
+            <User>
+              <Link href={`/user/${detail?.uploader_id}`}>
+                {detail?.uploader}
+              </Link>
+            </User>
+            <Menu>
+              <Favorite videoId={id} />
+            </Menu>
+          </TopRow>
           <Title>{detail?.title}</Title>
         </Wrapper>
       </Modal.Default>
@@ -49,6 +57,20 @@ const Video = styled.video`
   width: 100%;
   height: 100%;
   aspect-ratio: 16 / 9;
+`;
+
+const TopRow = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const Menu = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 `;
 
 const User = styled.h1`

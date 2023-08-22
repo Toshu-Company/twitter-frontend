@@ -67,16 +67,15 @@ export default function Index() {
     <>
       <Wrapper>
         <Content.Container>
-          {videos && videos.map((v, i) => <Content.Item key={i} video={v} />)}
-          <div
+          {videos &&
+            videos.map((v, i) => <Content.Item key={i} videoId={v.id} />)}
+          <Intersection
             id="intersection"
             ref={target}
-            style={{
-              display: videos.length > 0 ? "block" : "none",
-            }}
+            $visible={videos.length > 0}
           >
             Loading...
-          </div>
+          </Intersection>
         </Content.Container>
       </Wrapper>
     </>
@@ -89,4 +88,13 @@ const Wrapper = styled.div`
 
   padding-top: 20px;
   margin-bottom: 20px;
+`;
+
+const Intersection = styled.div<{
+  $visible: boolean;
+}>`
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  display: ${(props) => (props.$visible ? "block" : "none")};
 `;
