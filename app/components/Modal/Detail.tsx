@@ -2,7 +2,7 @@
 
 import { styled } from "styled-components";
 import Modal from ".";
-import { VideoDetail } from "@/app/lib/api/twi-videos.net";
+import { Extended, VideoDetail } from "@/app/lib/api/twi-videos.net";
 import { isSchool } from "@/app/lib/school";
 import Link from "next/link";
 import Image from "../Image";
@@ -11,11 +11,11 @@ import Favorite from "../Content/Favorite";
 type Props = {
   close: () => void;
   id: string;
-  detail: VideoDetail;
+  detail: VideoDetail | Extended.VideoDetailExtend;
 };
 
 export default function Detail({ close, id, detail }: Props) {
-  console.log(detail);
+  console.log(id, detail);
 
   return (
     <>
@@ -23,7 +23,13 @@ export default function Detail({ close, id, detail }: Props) {
         <Wrapper>
           <Video controls autoPlay loop autoFocus>
             <source
-              src={isSchool() ? "https://youtu.be/0bIRwBpBcZQ" : detail?.url[1]}
+              src={
+                isSchool()
+                  ? "https://youtu.be/0bIRwBpBcZQ"
+                  : Extended.isExtendedVideoDetail(detail)
+                  ? detail?.url
+                  : detail?.url[1]
+              }
               type="video/mp4"
             />
           </Video>

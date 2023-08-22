@@ -2,7 +2,11 @@
 
 import { keyframes, styled } from "styled-components";
 import Image from "../Image";
-import { SearchResultVideo, VideoDetail } from "@/app/lib/api/twi-videos.net";
+import {
+  Extended,
+  SearchResultVideo,
+  VideoDetail,
+} from "@/app/lib/api/twi-videos.net";
 import { useEffect, useState } from "react";
 import { TwiVideosNet } from "@/app/lib/api";
 import Modal from "../Modal";
@@ -14,7 +18,9 @@ type Props = {
 };
 
 export default function Item(props: Props) {
-  const [detail, setDetail] = useState<VideoDetail>();
+  const [detail, setDetail] = useState<
+    VideoDetail | Extended.VideoDetailExtend
+  >();
   const [modal, setModal] = useState<boolean>(false);
 
   useEffect(() => {
